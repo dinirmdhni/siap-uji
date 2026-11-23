@@ -909,7 +909,7 @@ def aktifkan_soal():
         clear()
         judul("AKTIFKAN KEMBALI SOAL")
 
-        tampilkan_daftar_soal(judul_tabel ="NONAKTIFKAN SOAL")
+        tampilkan_daftar_soal(judul_tabel ="AKTIFKAN KEMBALI SOAL")
 
         id_materi = input("\nID Materi : ").strip()
 
