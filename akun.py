@@ -1,6 +1,8 @@
+
 import hashlib
 import secrets
 from bantuan import garis, judul, jeda, ambil_data, jalankan, clear
+
 
 # =====================================
 # PASSWORD
@@ -31,6 +33,7 @@ def periksa_password(password, password_hash):
 
     return hasil.hex() == hash_asli
 
+
 # =====================================
 # REGISTRASI MAHASISWA
 # =====================================
@@ -41,7 +44,7 @@ def registrasi():
             clear()
             judul("REGISTRASI MAHASISWA")
 
-            print("Silakan isi data berikut:\n")
+            print("\nSilakan isi data berikut:\n")
 
             nama = input("Nama Lengkap : ").strip()
 
@@ -58,15 +61,13 @@ def registrasi():
             nama = nama.title()
             break
 
-        clear()
-
         pesan_error = ""
 
         while True:
             clear()
             judul("REGISTRASI MAHASISWA")
 
-            print("Silakan isi data berikut:\n")
+            print("\nSilakan isi data berikut:\n")
             print("Ketentuan Username:")
             print("- Diharuskan 4-20 karakter")
             print("- Mengandung minimal 1 huruf")
@@ -99,23 +100,21 @@ def registrasi():
                     WHERE username = %s
                 """, (username,))
 
-
-
                 if len(username_ada) > 0:
                     pesan_error = "Username sudah digunakan."
 
                 else:
                     break
-        
+
             print("\n" + pesan_error)
             input("\nTekan ENTER untuk mencoba lagi...")
-        
 
         while True:
             clear()
             judul("REGISTRASI MAHASISWA")
-            print("Silakan isi data berikut:")
-            print("\nKetentuan Password:")
+
+            print("\nSilakan isi data berikut:\n")
+            print("Ketentuan Password:")
             print("- Terdiri dari 6-20 karakter")
             print("- Mengandung minimal 1 huruf besar (A-Z)")
             print("- Mengandung minimal 1 huruf kecil (a-z)")
@@ -123,12 +122,12 @@ def registrasi():
             print("- Tidak boleh menggunakan spasi\n")
 
             print("Nama Lengkap :", nama)
-            print("Username :", username)
+            print("Username     :", username)
 
             password = input("Password     : ").strip()
 
             if not password:
-                pesan_error = "password tidak boleh kosong."
+                pesan_error = "Password tidak boleh kosong."
 
             elif len(password) < 6 or len(password) > 20:
                 pesan_error = "Password harus terdiri dari 6-20 karakter."
@@ -151,6 +150,7 @@ def registrasi():
             print("\n" + pesan_error)
             input("\nTekan ENTER untuk mencoba lagi...")
 
+        print()
         garis()
         print("[1] Daftar")
         print("[2] Kembali")
@@ -165,7 +165,7 @@ def registrasi():
             """)
 
             if len(role) == 0:
-                print("Role Mahasiswa belum tersedia.")
+                print("\nRole Mahasiswa belum tersedia.")
                 jeda()
                 return False
 
@@ -190,7 +190,7 @@ def registrasi():
             return False
 
         else:
-            print("Pilihan tidak tersedia.")
+            print("\nPilihan tidak tersedia.")
             jeda()
 
 
@@ -202,11 +202,12 @@ def login():
     clear()
     judul("LOGIN SIAPUJI")
 
-    print("Masukkan data akun Anda:\n")
+    print("\nMasukkan data akun Anda:\n")
 
     username = input("Username : ")
     password = input("Password : ")
 
+    print()
     garis()
     print("[1] Login")
     print("[2] Kembali")
@@ -217,7 +218,7 @@ def login():
         return None
 
     if pilih != "1":
-        print("Pilihan tidak tersedia.")
+        print("\nPilihan tidak tersedia.")
         jeda()
         return None
 
@@ -234,15 +235,15 @@ def login():
     """, (username,))
 
     if len(data) == 0:
-        print("Username tidak ditemukan.")
+        print("\nUsername tidak ditemukan.")
         jeda()
         return None
 
     if periksa_password(password, data[0][2]):
-        print("Login berhasil!")
+        print("\nLogin berhasil!")
         jeda()
         return (data[0][0], data[0][1], data[0][3])
 
-    print("Password salah.")
+    print("\nPassword salah.")
     jeda()
     return None

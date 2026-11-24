@@ -1,10 +1,12 @@
+
 import psycopg2
 
 from koneksi import buka_koneksi
-from bantuan import garis, judul, jeda, clear              
-from akun import registrasi, login                        
+from bantuan import garis, judul, jeda, clear, banner
+from akun import registrasi, login
 from riwayat import tampilkan_riwayat
 from latihan import mulai_latihan, menu_admin, tampilkan_prioritas
+
 
 # =====================================
 # MENU MAHASISWA
@@ -18,14 +20,16 @@ def menu_mahasiswa(data_pengguna):
         clear()
         judul("MENU MAHASISWA")
 
-        print("Selamat Datang,", nama)
-        print("\nSilakan pilih fitur yang ingin digunakan:\n")
+        print()
+        print(f"Selamat Datang, {nama}!")
+        print("\nSilakan pilih fitur yang ingin digunakan.\n")
 
+        print("-" * 50)
         print("[1] Mulai Latihan")
         print("[2] Riwayat Latihan")
         print("[3] Prioritas Belajar")
         print("[4] Logout")
-
+        print("-" * 50)
 
         pilih = input("\nPilih menu: ")
 
@@ -39,7 +43,6 @@ def menu_mahasiswa(data_pengguna):
             tampilkan_prioritas(id_pengguna)
             jeda()
 
-
         elif pilih == "4":
             print("\nApakah Anda yakin ingin logout?")
             print("[1] Ya")
@@ -48,11 +51,11 @@ def menu_mahasiswa(data_pengguna):
             keluar = input("\nPilih menu: ")
 
             if keluar == "1":
-                print("Berhasil logout.")
+                print("\nBerhasil logout.")
                 break
 
         else:
-            print("Pilihan tidak tersedia.")
+            print("\nPilihan tidak tersedia.")
             jeda()
 
 
@@ -63,19 +66,19 @@ def menu_mahasiswa(data_pengguna):
 def menu_awal():
     while True:
         clear()
-        judul("SIAPUJI")
-        print("PROGRAM EVALUASI KESIAPAN UJIAN".center(50))
+        banner()
 
-        print("\nSelamat Datang di SiapUji!")
-        print("\nSilakan pilih menu:\n")
+        print("\n")
+        print("Selamat Datang di SiapUji!")
+        print("Silakan pilih menu yang tersedia.")
 
+        print("\n" + "-" * 50)
         print("[1] Registrasi Mahasiswa")
         print("[2] Login")
         print("[3] Keluar")
+        print("-" * 50)
 
-        print("\n" + "-" * 50)
-
-        pilih = input("Pilih menu: ")
+        pilih = input("\nPilih menu: ")
 
         if pilih == "1":
             berhasil = registrasi()
@@ -101,19 +104,20 @@ def menu_awal():
         elif pilih == "3":
             judul("SIAPUJI SELESAI")
 
-            print("Terima kasih telah menggunakan SiapUji!")
-            print("\nSemoga latihan yang dilakukan membantu")
+            print("\nTerima kasih telah menggunakan SiapUji!")
+            print("Semoga latihan yang dilakukan membantu")
             print("meningkatkan kesiapan ujian Anda.")
 
             garis()
-            print("PROGRAM SELESAI".center(50))
+            print("PROGRAM SELESAI")
             garis()
             break
 
         else:
-            print("Pilihan tidak tersedia.")
+            print("\nPilihan tidak tersedia.")
             jeda()
-            
+
+
 # =====================================
 # MENJALANKAN PROGRAM
 # =====================================

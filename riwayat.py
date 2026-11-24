@@ -4,6 +4,7 @@ from bantuan import judul, jeda, ambil_data, clear
 # RIWAYAT LATIHAN
 # =====================================
 
+
 def tampilkan_riwayat(id_pengguna):
     while True:
         clear()
@@ -19,25 +20,35 @@ def tampilkan_riwayat(id_pengguna):
             JOIN materi
             ON riwayat_latihan.id_materi = materi.id_materi
             WHERE riwayat_latihan.id_pengguna = %s
-            ORDER BY riwayat_latihan.tanggal_pengerjaan
+            ORDER BY riwayat_latihan.tanggal_pengerjaan DESC
         """, (id_pengguna,))
 
         if len(daftar) == 0:
-            print("Belum ada riwayat latihan.")
+            print("\nBelum ada riwayat latihan.")
             jeda()
             return
 
-        print("Berikut riwayat latihan Anda:\n")
-        print("+----+----------------------+------------+-------+")
+        print("\nBerikut riwayat latihan Anda.")
+        print("Riwayat terbaru ditampilkan paling atas.\n")
 
-        for data in daftar:
+        print("=" * 75)
+        print("{:<6} {:<8} {:<35} {:<15} {:>8}".format(
+            "NO", "ID", "MATERI", "TANGGAL", "NILAI"
+        ))
+        print("-" * 75)
+
+        for nomor, data in enumerate(daftar, start=1):
             tanggal = data[2].strftime("%d-%m-%Y")
 
-            print("| {:<2} | {:<20} | {:<10} | {:>5} |".format(
-                data[0], data[1], tanggal, format(float(data[3]), ".2f")
+            print("{:<6} {:<8} {:<35} {:<15} {:>8.2f}".format(
+                nomor,
+                data[0],
+                data[1][:35],
+                tanggal,
+                float(data[3])
             ))
 
-        print("+----+----------------------+------------+-------+")
+        print("=" * 75)
 
         print("\n[1] Lihat Detail Riwayat")
         print("[2] Kembali")
@@ -64,8 +75,10 @@ def tampilkan_riwayat(id_pengguna):
             return
 
         else:
-            print("Pilihan tidak tersedia.")
+            print("\nPilihan tidak tersedia.")
             jeda()
+
+
 
 def detail_riwayat(id_pengguna, id_riwayat):
     clear()
@@ -88,19 +101,33 @@ def detail_riwayat(id_pengguna, id_riwayat):
     """, (id_riwayat, id_pengguna))
 
     if len(data) == 0:
-        print("Riwayat tidak ditemukan.")
+        print("\nRiwayat tidak ditemukan.")
         jeda()
         return
 
     riwayat = data[0]
 
-    print("ID Riwayat      :", riwayat[0])
-    print("Materi          :", riwayat[1])
-    print("Tanggal         :", riwayat[2].strftime("%d-%m-%Y"))
-    print("\nJumlah Soal     :", riwayat[3])
-    print("Jawaban Benar   :", riwayat[4])
-    print("Jawaban Salah   :", riwayat[5])
-    print("Nilai           :", format(float(riwayat[6]), ".2f"))
+    print()
+    print("=" * 50)
+    print("INFORMASI LATIHAN")
+    print("=" * 50)
+
+    print(f"ID Riwayat       : {riwayat[0]}")
+    print(f"Materi           : {riwayat[1]}")
+    print(f"Tanggal          : {riwayat[2].strftime('%d-%m-%Y')}")
+
+    print("\n" + "-" * 50)
+    print("HASIL EVALUASI")
+    print("-" * 50)
+
+    print(f"Jumlah Soal      : {riwayat[3]}")
+    print(f"Jawaban Benar    : {riwayat[4]}")
+    print(f"Jawaban Salah    : {riwayat[5]}")
+
+    print("\n" + "-" * 50)
+    print("NILAI")
+    print(f"Nilai            : {float(riwayat[6]):.2f}")
+    print("=" * 50)
 
     print("\n[1] Kembali ke Riwayat Latihan")
 
@@ -111,19 +138,32 @@ def detail_riwayat(id_pengguna, id_riwayat):
             return
 
         else:
-            print("Pilihan tidak tersedia.")
+            print("\nPilihan tidak tersedia.")
             jeda()
-            clear()
 
+            clear()
             judul("DETAIL RIWAYAT LATIHAN")
 
-            print("ID Riwayat      :", riwayat[0])
-            print("Materi          :", riwayat[1])
-            print("Tanggal         :", riwayat[2].strftime("%d-%m-%Y"))
-            print("\nJumlah Soal     :", riwayat[3])
-            print("Jawaban Benar   :", riwayat[4])
-            print("Jawaban Salah   :", riwayat[5])
-            print("Nilai           :", format(float(riwayat[6]), ".2f"))
+            print()
+            print("=" * 50)
+            print("INFORMASI LATIHAN")
+            print("=" * 50)
+
+            print(f"ID Riwayat       : {riwayat[0]}")
+            print(f"Materi           : {riwayat[1]}")
+            print(f"Tanggal          : {riwayat[2].strftime('%d-%m-%Y')}")
+
+            print("\n" + "-" * 50)
+            print("HASIL EVALUASI")
+            print("-" * 50)
+
+            print(f"Jumlah Soal      : {riwayat[3]}")
+            print(f"Jawaban Benar    : {riwayat[4]}")
+            print(f"Jawaban Salah    : {riwayat[5]}")
+
+            print("\n" + "-" * 50)
+            print("NILAI")
+            print(f"Nilai            : {float(riwayat[6]):.2f}")
+            print("=" * 50)
 
             print("\n[1] Kembali ke Riwayat Latihan")
-          

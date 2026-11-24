@@ -1059,17 +1059,21 @@ def menu_soal():
 # MENU ADMIN
 # =====================================
 
+
 def menu_admin():
     while True:
         clear()
         judul("MENU ADMIN")
 
+        print()
         print("Selamat Datang, Admin!")
-        print("\nKelola data yang tersedia pada SiapUji.\n")
+        print("\nKelola data yang tersedia pada SiapUji.")
 
+        print("\n" + "-" * 50)
         print("[1] Pengelolaan Materi")
         print("[2] Pengelolaan Bank Soal")
         print("[3] Logout")
+        print("-" * 50)
 
         pilih = input("\nPilih menu: ")
 
@@ -1087,11 +1091,11 @@ def menu_admin():
             keluar = input("\nPilih menu: ")
 
             if keluar == "1":
-                print("Berhasil logout.")
+                print("\nBerhasil logout.")
                 break
 
         else:
-            print("Pilihan tidak tersedia.")
+            print("\nPilihan tidak tersedia.")
             jeda()
 
 
@@ -1228,7 +1232,7 @@ def mulai_latihan(id_pengguna):
 
     for nomor, data in enumerate(soal, start=1):
         clear()
-        judul("LATIHAN SIAPUJI")
+        judul("LATIHAN SiapUji")
 
         print("Materi :", nama_materi)
         print("Soal   :", nomor, "dari", len(soal))
@@ -1250,7 +1254,7 @@ def mulai_latihan(id_pengguna):
 
             clear()
 
-            judul("LATIHAN SIAPUJI")
+            judul("LATIHAN SiapUji")
             print("Materi :", nama_materi)
             print("Soal   :", nomor, "dari", len(soal))
             print("\n" + "-" * 50)
@@ -1285,15 +1289,30 @@ def mulai_latihan(id_pengguna):
     nilai = benar / jumlah_soal * 100
     kategori = tentukan_kategori(nilai)
 
+    
     clear()
     judul("HASIL LATIHAN")
+    
+    print()
+    print("Materi              :", nama_materi)
 
-    print("Materi         :", nama_materi)
-    print("\nJumlah Soal    :", jumlah_soal)
-    print("Jawaban Benar  :", benar)
-    print("Jawaban Salah  :", salah)
-    print("\nNilai          :", format(nilai, ".2f"))
-    print("\nKategori Penguasaan:", kategori)
+    print("\n" + "-" * 50)
+    print("HASIL EVALUASI")
+    print("-" * 50)
+
+    print(f"Jumlah Soal         : {jumlah_soal}")
+    print(f"Jawaban Benar       : {benar}")
+    print(f"Jawaban Salah       : {salah}")
+
+    print("\n" + "-" * 50)
+    print("NILAI")
+    print(f"Nilai               : {nilai:.2f}")
+
+    print("\nKATEGORI PENGUASAAN")
+    print("Kategori            :", kategori)
+
+    print("-" * 50)
+
 
     if id_riwayat is not None:
         print("\n[1] Lihat Prioritas Belajar")
@@ -1316,12 +1335,14 @@ def mulai_latihan(id_pengguna):
                 clear()
                 judul("HASIL LATIHAN")
 
-                print(f"Materi         : {nama_materi}")
-                print(f"\nJumlah Soal    : {jumlah_soal}")
-                print(f"Jawaban Benar  : {benar}")
-                print(f"Jawaban Salah  : {salah}")
-                print(f"\nNilai          : {nilai:.2f}")
-                print(f"\nKategori Penguasaan: {kategori}")
+                print()
+                print("Materi              :", nama_materi)
+                print(f"Jumlah Soal         : {jumlah_soal}")
+                print(f"Jawaban Benar       : {benar}")
+                print(f"Jawaban Salah       : {salah}")
+                print(f"Nilai               : {nilai:.2f}")
+                print("Kategori Penguasaan:", kategori)
+
                 print("\n[1] Lihat Prioritas Belajar")
                 print("[2] Kembali ke Menu Mahasiswa")
 
@@ -1343,6 +1364,7 @@ def mulai_latihan(id_pengguna):
 # =====================================
 # PRIORITAS BELAJAR
 # =====================================
+
 
 
 def tampilkan_prioritas(id_pengguna):
@@ -1367,21 +1389,30 @@ def tampilkan_prioritas(id_pengguna):
     """, (id_pengguna,))
 
     if len(daftar) == 0:
-        print("Belum ada hasil latihan.")
+        print("\nBelum ada hasil latihan.")
         return
 
-    print("Urutan materi berdasarkan nilai terendah:\n")
+    print("\nUrutan materi berdasarkan nilai latihan terbaru.")
+    print("Materi dengan nilai terendah menjadi prioritas belajar.\n")
 
-    print("+----+----------------------+-------+")
+    print("=" * 55)
+    print("{:<5} {:<30} {:>10}".format(
+        "NO", "MATERI", "NILAI"
+    ))
+    print("-" * 55)
 
     for nomor, data in enumerate(daftar, start=1):
-        print("| {:<2} | {:<20} | {:>5} |".format(
-            nomor, data[0], format(float(data[1]), ".2f")
+        nama_materi = data[0]
+        nilai = float(data[1])
+
+        print("{:<5} {:<30} {:>10.2f}".format(
+            nomor, nama_materi[:30], nilai
         ))
 
-    print("+----+----------------------+-------+")
+    print("=" * 55)
 
-    print("\nMateri dengan nilai terendah menjadi")
-    print("prioritas untuk dipelajari kembali.")
-
-    print("\nMateri prioritas:", daftar[0][0])
+    print("\nMATERI PRIORITAS BELAJAR")
+    print("Materi :", daftar[0][0])
+    print("Nilai  :", format(float(daftar[0][1]), ".2f"))
+    print("\nPelajari kembali materi tersebut untuk")
+    print("meningkatkan pemahamanmu.")
