@@ -1,7 +1,7 @@
 import psycopg2
 
 from koneksi import buka_koneksi
-from bantuan import garis, judul, jeda, ambil_data, jalankan,clear              
+from bantuan import garis, judul, jeda, ambil_data, jalankan, clear              
 
 # =====================================
 # MENAMPILKAN DAFTAR MATERI
@@ -909,7 +909,7 @@ def aktifkan_soal():
         clear()
         judul("AKTIFKAN KEMBALI SOAL")
 
-        tampilkan_daftar_soal(judul_tabel ="AKTIFKAN KEMBALI SOAL")
+        tampilkan_daftar_soal(judul_tabel="AKTIFKAN KEMBALI SOAL")
 
         id_materi = input("\nID Materi : ").strip()
 

@@ -12,6 +12,9 @@ def tampilkan_riwayat(id_pengguna):
 
         daftar = ambil_data("""
             SELECT
+                ROW_NUMBER() OVER (
+                    ORDER BY riwayat_latihan.id_riwayat
+                ) AS nomor_riwayat,
                 riwayat_latihan.id_riwayat,
                 materi.nama_materi,
                 riwayat_latihan.tanggal_pengerjaan,
@@ -37,15 +40,15 @@ def tampilkan_riwayat(id_pengguna):
         ))
         print("-" * 75)
 
-        for nomor, data in enumerate(daftar, start=1):
-            tanggal = data[2].strftime("%d-%m-%Y")
+        for data in daftar:
+            tanggal = data[3].strftime("%d-%m-%Y")
 
             print("{:<6} {:<8} {:<35} {:<15} {:>8.2f}".format(
-                nomor,
                 data[0],
-                data[1][:35],
+                data[1],
+                data[2][:35],
                 tanggal,
-                float(data[3])
+                float(data[4])
             ))
 
         print("=" * 75)
@@ -56,19 +59,27 @@ def tampilkan_riwayat(id_pengguna):
         pilih = input("\nPilih menu: ")
 
         if pilih == "1":
-            id_riwayat = input("\nPilih ID Riwayat: ").strip()
+            id_riwayat = input("\nPilih Nomor Riwayat: ").strip()
 
             if not id_riwayat:
-                print("\nID riwayat tidak boleh kosong.")
+                print("\nNomor riwayat tidak boleh kosong.")
                 jeda()
                 continue
 
             if not id_riwayat.isdigit():
-                print("\nID riwayat harus berupa angka.")
+                print("\nNomor riwayat harus berupa angka.")
                 jeda()
                 continue
 
-            id_riwayat = int(id_riwayat)
+            nomor_riwayat = int(id_riwayat)
+
+            if nomor_riwayat < 1 or nomor_riwayat > len(daftar):
+                print("\nNomor riwayat tidak ditemukan.")
+                jeda()
+                continue
+
+            id_riwayat = daftar[nomor_riwayat - 1][1]
+
             detail_riwayat(id_pengguna, id_riwayat)
 
         elif pilih == "2":
